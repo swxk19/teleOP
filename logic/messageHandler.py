@@ -3,6 +3,7 @@ from telegram import Update
 from telegram.ext import ContextTypes, MessageHandler, filters
 from model import get_persons, get_current_command_state
 from globals import *
+from storage import save_data
 
 def init_message_handler():
     return MessageHandler(filters.TEXT & (~filters.COMMAND), parse_message)
@@ -41,6 +42,8 @@ def add_transaction(ower_str: str, owee_str: str, amount: float):
         ower.get_owe_people()[owee.name] = amount
     else:
         ower.get_owe_people()[owee.name] += amount
+
+    save_data(get_persons())
 
     return "Transaction added:\n%s owes %s %s" % (ower, owee, amount)
 

@@ -1,4 +1,4 @@
-from commandStates import CommandStates
+from logic.commandStates import CommandStates
 from telegram.ext import  Application
 from globals import *
 from logic.messageHandler import init_message_handler
