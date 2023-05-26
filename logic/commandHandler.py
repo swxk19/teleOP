@@ -42,5 +42,4 @@ async def state_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if get_current_command_state() == None:
         await context.bot.send_message(chat_id=update.effective_chat.id, text="None")
     else:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text=str(get_current_command_state())
-                                            + "\nPeople:\n" + get_owe_summary())
+        await context.bot.send_message(chat_id=update.effective_chat.id, text=get_owe_summary())

@@ -23,7 +23,7 @@ def add_person(name: str):
     if (get_current_command_state() == NEWBOOK):
         new_person = Person(name)
         get_persons()[name] = new_person
-        return "added " + new_person.name
+        return "added person: " + new_person.name
     else:
         return "Error. Choose a command again."
 
