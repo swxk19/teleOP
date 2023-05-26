@@ -18,3 +18,10 @@ class Person:
     def get_owe_people(self):
         return self.owe_people
 
+    def get_total_owings(self):
+        total_owings = 0
+        for payable in self.owe_people:
+            total_owings += self.owe_people[payable]
+        return total_owings
+
+

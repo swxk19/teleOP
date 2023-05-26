@@ -20,6 +20,7 @@ async def parse_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text=reply)
 
 def add_person(name: str):
+    name = name.lower()
     if (len(name.split(" ")) != 1):
         return "no spaces pls"
 

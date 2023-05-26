@@ -30,6 +30,29 @@ def get_owe_summary():
 
     return result
 
+def get_pool_summary(persons):
+    pool_data = {}
+    for name in persons:
+        pool_data[name] = 0
+    for name in persons:
+        pool_data[name] += persons[name].get_total_owings()
+        for owee in persons:
+            if owee != name:
+                if persons[owee].get_owe_people()[name] > 0:
+                    pool_data[name] -= persons[owee].get_owe_people()[name]
+    return pool_data
+
+def get_pool_summary_str(persons):
+    pool_data = get_pool_summary(persons)
+
+    result = "Pool Summary (+ve means owes pool, -ve means take from pool):\n\n"
+    for name in pool_data:
+        result += name + ": " + str(pool_data[name]) + "\n"
+
+    return result
+
+
+
 def set_current_command_state(command_state: CommandStates):
     global current_command_state
     current_command_state = command_state
