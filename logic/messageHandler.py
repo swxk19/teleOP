@@ -38,10 +38,13 @@ def add_transaction(ower_str: str, owee_str: str, amount: float):
 
     ower = persons[ower_str]
     owee = persons[owee_str]
-    if owee.name not in ower.get_owe_people():
-        ower.get_owe_people()[owee.name] = amount
+
+    difference = owee.get_owe_people()[ower.name] - amount
+    if difference > 0:
+        owee.get_owe_people()[ower.name] -= difference
     else:
-        ower.get_owe_people()[owee.name] += amount
+        ower.get_owe_people()[owee.name] -= difference
+        owee.get_owe_people()[ower.name] = 0
 
     save_data(get_persons())
 
