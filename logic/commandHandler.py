@@ -1,8 +1,7 @@
-from person import Person
+from model import get_current_command_state, set_current_command_state, get_persons_str, get_persons, get_owe_summary
 from telegram import Update
 from telegram.ext import ContextTypes, CommandHandler
 from globals import *
-from logic import get_current_command_state, set_current_command_state, persons
 
 def init_command_handlers():
     handlers = []
@@ -22,21 +21,23 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def home_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     set_current_command_state(HOME)
+    persons = get_persons()
 
-    persons_string = "\n".join([str(person) for person in persons])
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Book contains:\n" + persons_string)
+    for person in persons:
+        for owee in persons:
+            if person != owee:
+                persons[person].get_owe_people()[owee] = 0
+
+    await context.bot.send_message(chat_id=update.effective_chat.id, text="Book contains:\n" + get_persons_str())
 
 async def new_book_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     set_current_command_state(NEWBOOK)
 
-    print (get_current_command_state())
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Who's going? Enter 1 name per message. Type '/end' to finish adding.")
 
 async def state_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    global current_command_state
-    print(get_current_command_state())
-
     if get_current_command_state() == None:
         await context.bot.send_message(chat_id=update.effective_chat.id, text="None")
     else:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text=str(get_current_command_state()))
+        await context.bot.send_message(chat_id=update.effective_chat.id, text=str(get_current_command_state())
+                                            + "\nPeople:\n" + get_owe_summary())
