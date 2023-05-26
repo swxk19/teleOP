@@ -21,6 +21,8 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text=":-)")
 
 async def home_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if get_current_command_state() == HOME:
+        return
     set_current_command_state(HOME)
     persons = get_persons()
 
