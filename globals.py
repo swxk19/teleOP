@@ -13,4 +13,8 @@ HELP_TEXT = """Commands:\n
 /newBook: deletes everything and adds new people
 /end: finish adding people
 /log: view specifically what each person owes
-/pool: view summary of what each person contributes to pool"""
+/pool: view summary of what each person contributes to pool
+
+Transaction format:
+<ower> <amount> <payer>
+"""
