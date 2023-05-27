@@ -12,6 +12,7 @@ def init_command_handlers():
     handlers.append(CommandHandler('start', start_command))
     handlers.append(CommandHandler('newBook', new_book_command))
     handlers.append(CommandHandler('end', home_command))
+    handlers.append(CommandHandler('help', help_command))
 
     return handlers
 
@@ -51,3 +52,6 @@ async def log_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=update.effective_chat.id, text="None")
     else:
         await context.bot.send_message(chat_id=update.effective_chat.id, text=get_owe_summary())
+
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await context.bot.send_message(chat_id=update.effective_chat.id, text=HELP_TEXT)
